@@ -1,0 +1,194 @@
+	public static void MakeSolve (int[][] MineField, int MineNum)
+	{
+		Scanner Choice = new Scanner(System.in);
+		Random rand = new Random();
+		int Solve[] = new int[50];
+		
+		int a = 0;
+		int[][] Mirror = new int[9][9];
+		
+		for (int i = 0; i < 9; i++)
+		{
+			for (int j = 0; j < 9; j++)
+			{
+					Mirror[i][j] = MineField[i][j];
+			}
+		}
+		
+		int k = 0;
+		
+		for (int i = 0; i < 9; i++)
+		{
+			for (int j = 0; j < 9; j++)
+			{
+				if (Mirror[i][j] == MineNum)
+				{
+					Solve[k] = (200 + 10*i + j);
+					k++;
+				}
+			}
+		}
+		
+		for (int i = 0; i < 9; i++)
+		{
+			for (int j = 0; j < 9; j++)
+			{
+				if (Mirror[i][j] == 0)
+				{
+					Solve[k] = (100 + 10*i + j);
+					k++;
+					KillZeros(i,j,Mirror);
+				}
+			}
+		}
+		
+		
+		for (int i = 0; i < 9; i++)
+		{
+			for (int j = 0; j < 9; j++)
+			{
+				if (Mirror[i][j] == 1)
+				{
+					Solve[k] = (100 + 10*i + j);
+					k++;
+				}
+			}
+		}
+		
+		
+		for (int i = 0; i < 9; i++)
+		{
+			for (int j = 0; j < 9; j++)
+			{
+				if (Mirror[i][j] == 2)
+				{
+					Solve[k] = (100 + 10*i + j);
+					k++;
+				}
+			}
+		}
+		
+		
+		for (int i = 0; i < 9; i++)
+		{
+			for (int j = 0; j < 9; j++)
+			{
+				if (Mirror[i][j] == 3)
+				{
+					Solve[k] = (100 + 10*i + j);
+					k++;
+				}
+			}
+		}
+		
+		for (int i = 0; i < 9; i++)
+		{
+			for (int j = 0; j < 9; j++)
+			{
+				if (Mirror[i][j] == 4)
+				{
+					Solve[k] = (100 + 10*i + j);
+					k++;
+				}
+			}
+		}
+		
+		for (int i = 0; i < 9; i++)
+		{
+			for (int j = 0; j < 9; j++)
+			{
+				if (Mirror[i][j] == 5)
+				{
+					Solve[k] = (100 + 10*i + j);
+					k++;
+				}
+			}
+		}
+		
+		int counter = 0;
+		
+		
+		for (int i = 0; i < Solve.length; i++)
+		{
+			if (Solve[i] != 0)
+			{
+				counter++;
+			}
+		}
+		
+		int[] Solution = new int[counter];
+		int[] Solution2 = new int[counter+20];
+		
+		
+			for (int i = 0; i < Solution.length; i++)
+			{
+				boolean empty = false;
+				
+				while(!empty)
+				{
+					int place = rand.nextInt(counter);
+					if (Solution[place] == 0)
+						{
+							Solution[place] = Solve[i];
+							empty = true;
+						}
+				}
+				
+			}
+
+			int count = 0;
+			
+			for (int i = 0; i < Solution.length; i++)
+			{
+				
+				if (Solution[i] > 199)
+				{
+					Solution2[count] = Solution[i];
+					Solution2[count+1] = Solution[i]+100;
+					Solution2[count+2] = Solution[i];
+					
+					count = count+3;
+				}
+				
+				else
+				{
+					Solution2[count] = Solution[i];
+					count++;
+				}
+				
+			}
+
+		for (int j = 0; j < Solution2.length; j++)
+		{
+			System.out.println(Solution2[j]);
+		}		
+		
+		System.out.println(" ");
+	}
+
+	public static void KillZeros (int i , int j , int[][] Mirror)
+	{
+		if(!(i > 8 || i < 0 || j > 8 || j < 0))
+		{
+			if(Mirror[i][j] != 0)
+			{
+				Mirror[i][j] = 577;
+			}
+			
+			if(Mirror[i][j] == 0)
+			{	
+				Mirror[i][j] = 588;
+				
+					for (int a = -1; a<=1; a++)
+					{
+						for (int b = -1; b<=1; b++)
+						{
+							if (!(a == 0 && b == 0))
+							{
+								KillZeros(i+a,j+b,Mirror);
+							}
+						}
+					}
+			}
+		}
+	}
